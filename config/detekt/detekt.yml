@@ -1,81 +1,78 @@
 build:
-  maxIssues: 0
-  excludeCorrectable: false
+    maxIssues: 0
+    excludeCorrectable: false
 
 config:
-  validation: true
+    validation: true
 
 processors:
-  active: true
+    active: true
 
 console-reports:
-  active: true
-  exclude:
-    - 'ProjectStatisticsReport'
+    active: true
+    exclude:
+        - 'ProjectStatisticsReport'
 
-# ===== Ajustes útiles para Android/Compose/Hilt/Coroutines =====
+# ===== Reglas para Android/Compose =====
 style:
-  MagicNumber:
-    active: true
-    ignorePropertyDeclaration: true
-    ignoreCompanionObjectPropertyDeclaration: true
-    ignoreAnnotation: true
-    ignoreEnums: true
-  FunctionNaming:
-    active: true
-    # Permitimos PascalCase en @Composable que devuelven Unit
-    functionPattern: '[a-zA-Z][a-zA-Z0-9]*'
-    ignoreAnnotated: ['Composable']
-  TopLevelPropertyNaming:
-    active: true
-    constantPattern: '[A-Z][A-Za-z0-9]*'
-  LongParameterList:
-    active: true
-    functionThreshold: 8
-    ignoreDefaultParameters: true
-  UnusedPrivateFunction:
-    active: true
-    ignoreAnnotated: ['Preview']   # No marcar previews como no usadas
-  TooManyFunctions:
-    active: true
-    ignoreAnnotatedFunctions: ['Preview']
-
-complexity:
-  LongMethod:
-    active: true
-    threshold: 80
-  CyclomaticComplexMethod:
-    active: true
-    threshold: 15
-
-naming:
-  FunctionMaxLength:
-    active: false
-
-potential-bugs:
-  CastToNullableType:
-    active: true
-
-exceptions:
-  SwallowedException:
-    active: true
+    MagicNumber:
+        active: true
+        ignorePropertyDeclaration: true
+        ignoreCompanionObjectPropertyDeclaration: true
+        ignoreAnnotation: true
+        ignoreEnums: true
+    UnusedPrivateMember:
+        active: true   # <-- AQUÍ va esta regla
 
 performance:
-  SpreadOperator:
-    active: true
+    SpreadOperator:
+        active: true
 
-# Reglas de Coroutines (si añades el plugin rules-coroutines, ver nota abajo)
+exceptions:
+    SwallowedException:
+        active: true
+
+potential-bugs:
+    CastToNullableType:
+        active: true
+
+naming:
+    FunctionNaming:
+        active: true
+        # Permitimos PascalCase en @Composable que devuelven Unit
+        functionPattern: '[a-zA-Z][a-zA-Z0-9]*'
+        ignoreAnnotated: ['Composable', 'Preview']
+    TopLevelPropertyNaming:
+        active: true
+        constantPattern: '[A-Z][A-Za-z0-9]*'
+
+complexity:
+    LongMethod:
+        active: true
+        threshold: 80
+    CyclomaticComplexMethod:
+        active: true
+        threshold: 15
+    LongParameterList:
+        active: true
+        functionThreshold: 8
+        ignoreDefaultParameters: true
+    TooManyFunctions:
+        active: true
+
+# Si usas el plugin de coroutines, deja este bloque;
+# si no, coméntalo o añade el plugin detekt-rules-coroutines en build.gradle.kts (raíz).
 coroutines:
-  GlobalCoroutineUsage:
-    active: true
-  InjectDispatcher:
-    active: true
-  RedundantSuspendModifier:
-    active: true
-  SleepInsteadOfDelay:
-    active: true
-  SuspendFunWithFlowReturnType:
-    active: true
+    GlobalCoroutineUsage:
+        active: true
+    InjectDispatcher:
+        active: true
+    RedundantSuspendModifier:
+        active: true
+    SleepInsteadOfDelay:
+        active: true
+    SuspendFunWithFlowReturnType:
+        active: true
 
 output-reports:
-  active: true
+    active: true

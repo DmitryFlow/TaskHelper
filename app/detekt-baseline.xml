@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>MatchingDeclarationName:AppNav.kt$Destinations</ID>
+    <ID>ModifierMissing:HomeScreen.kt$HomeScreen</ID>
+    <ID>NewLineAtEndOfFile:AppModule.kt$com.example.taskhelper.di.AppModule.kt</ID>
+    <ID>NewLineAtEndOfFile:Color.kt$com.example.taskhelper.ui.theme.Color.kt</ID>
+    <ID>NewLineAtEndOfFile:ExampleUnitTest.kt$com.example.taskhelper.ExampleUnitTest.kt</ID>
+    <ID>NewLineAtEndOfFile:TaskHelperApp.kt$com.example.taskhelper.TaskHelperApp.kt</ID>
+    <ID>NewLineAtEndOfFile:Theme.kt$com.example.taskhelper.ui.theme.Theme.kt</ID>
+    <ID>NewLineAtEndOfFile:Type.kt$com.example.taskhelper.ui.theme.Type.kt</ID>
+    <ID>VariableNaming:UserPrefs.kt$UserPrefs$// Define la clave tipada para una preferencia booleana. // - Evita strings mágicos y te da seguridad de tipos. private val KEY_DARK = booleanPreferencesKey("dark_mode")</ID>
+    <ID>WildcardImport:ExampleUnitTest.kt$import org.junit.Assert.*</ID>
+    <ID>WildcardImport:HomeScreen.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:TaskDao.kt$import androidx.room.*</ID>
+  </CurrentIssues>
+</SmellBaseline>

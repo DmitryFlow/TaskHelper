@@ -1,15 +1,46 @@
+# ── IDE ────────────────────────────────────────────────────────────────────────
 *.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+# Ignora lo ruidoso de .idea, pero permite compartir estilos/inspecciones opcionalmente
+.idea/
+!.idea/codeStyles/
+!.idea/inspectionProfiles/
+!.idea/runConfigurations/
+!.idea/vcs.xml
+
+# ── SO / Miscelánea ───────────────────────────────────────────────────────────
 .DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+Thumbs.db
+*.log
+*.hprof
+
+# ── Gradle/Android build ──────────────────────────────────────────────────────
+.gradle/
+**/build/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# ── Config local / firmas (NO subir) ─────────────────────────────────────────
 local.properties
+keystore.properties
+*.jks
+*.keystore
+
+# ── Generados por KSP/KAPT ───────────────────────────────────────────────────
+**/ksp/
+**/kapt*/
+# (si sólo usas KSP, igualmente no molestan)
+
+# ── Lint/Reports/Cobertura (se regeneran) ────────────────────────────────────
+**/outputs/unit_test_code_coverage/
+**/jacoco/*.exec
+**/build/reports/
+
+# ── APK/AAB artefactos locales ───────────────────────────────────────────────
+*.apk
+*.aab
+
+# ── Fastlane (si lo usas) ────────────────────────────────────────────────────
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
