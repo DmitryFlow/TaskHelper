@@ -1,0 +1,81 @@
+build:
+  maxIssues: 0
+  excludeCorrectable: false
+
+config:
+  validation: true
+
+processors:
+  active: true
+
+console-reports:
+  active: true
+  exclude:
+    - 'ProjectStatisticsReport'
+
+# ===== Ajustes útiles para Android/Compose/Hilt/Coroutines =====
+style:
+  MagicNumber:
+    active: true
+    ignorePropertyDeclaration: true
+    ignoreCompanionObjectPropertyDeclaration: true
+    ignoreAnnotation: true
+    ignoreEnums: true
+  FunctionNaming:
+    active: true
+    # Permitimos PascalCase en @Composable que devuelven Unit
+    functionPattern: '[a-zA-Z][a-zA-Z0-9]*'
+    ignoreAnnotated: ['Composable']
+  TopLevelPropertyNaming:
+    active: true
+    constantPattern: '[A-Z][A-Za-z0-9]*'
+  LongParameterList:
+    active: true
+    functionThreshold: 8
+    ignoreDefaultParameters: true
+  UnusedPrivateFunction:
+    active: true
+    ignoreAnnotated: ['Preview']   # No marcar previews como no usadas
+  TooManyFunctions:
+    active: true
+    ignoreAnnotatedFunctions: ['Preview']
+
+complexity:
+  LongMethod:
+    active: true
+    threshold: 80
+  CyclomaticComplexMethod:
+    active: true
+    threshold: 15
+
+naming:
+  FunctionMaxLength:
+    active: false
+
+potential-bugs:
+  CastToNullableType:
+    active: true
+
+exceptions:
+  SwallowedException:
+    active: true
+
+performance:
+  SpreadOperator:
+    active: true
+
+# Reglas de Coroutines (si añades el plugin rules-coroutines, ver nota abajo)
+coroutines:
+  GlobalCoroutineUsage:
+    active: true
+  InjectDispatcher:
+    active: true
+  RedundantSuspendModifier:
+    active: true
+  SleepInsteadOfDelay:
+    active: true
+  SuspendFunWithFlowReturnType:
+    active: true
+
+output-reports:
+  active: true

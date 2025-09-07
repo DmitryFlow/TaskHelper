@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.TaskHelper" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- Fondo de la splash -->
+        <item name="android:windowSplashScreenBackground">@color/splash_bg</item>
+        <!-- Icono de la splash: usa el inset para que no salga enorme -->
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_taskhelper_text_inset</item>
+        <!-- Sin círculo de fondo para que no recorte -->
+        <item name="android:windowSplashScreenIconBackgroundColor">@android:color/transparent</item>
+        <item name="android:windowSplashScreenAnimationDuration">200</item>
+    </style>
+</resources>

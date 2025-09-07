@@ -1,0 +1,57 @@
+name: CI
+
+on:
+    push:
+        branches: [ "main" ]
+    pull_request:
+        branches: [ "main" ]
+
+permissions:
+    contents: read
+    security-events: write   # necesario para subir SARIF
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        concurrency:
+            group: ci-${{ github.ref }}
+            cancel-in-progress: true
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Set up JDK 17
+              uses: actions/setup-java@v4
+              with:
+                  distribution: temurin
+                  java-version: 17
+
+            - name: Setup Gradle (cache + config-cache)
+              uses: gradle/actions/setup-gradle@v4
+
+            # Nota: los runners suelen traer Android SDK; si necesitas paquetes específicos, añade
+            # - uses: android-actions/setup-android@v3
+
+            - name: Quality & Tests
+              run: |
+                  ./gradlew --no-daemon --stacktrace \
+                    ktlintCheck detekt :app:testDebugUnitTest :app:jacocoTestReport assembleDebug
+
+            - name: Upload HTML reports (Detekt/Ktlint/JaCoCo)
+              uses: actions/upload-artifact@v4
+              if: always()
+              with:
+                  name: reports
+                  path: |
+                      **/build/reports/detekt/**
+                      **/build/reports/ktlint/**
+                      **/build/reports/jacoco/**
+
+            # Opcional: publica SARIF de Detekt en Code Scanning (verás avisos en la pestaña "Security")
+            - name: Upload Detekt SARIF
+              uses: github/codeql-action/upload-sarif@v3
+              if: always()
+              with:
+                  sarif_file: "**/build/reports/detekt/*.sarif"
+                  category: detekt
