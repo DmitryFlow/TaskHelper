@@ -20,10 +20,12 @@ private val Context.dataStore by preferencesDataStore(name = "user_prefs")
 // Wrapper de acceso a preferencias de usuario.
 // - Recibe un Context (usualmente inyectado con @ApplicationContext desde Hilt).
 // - Expone Flows para leer y funciones 'suspend' para escribir.
-class UserPrefs(private val context: Context) {
+class UserPrefs(
+    private val context: Context,
+) {
     // Define la clave tipada para una preferencia booleana.
     //  - Evita strings mágicos y te da seguridad de tipos.
-    private val KEY_DARK = booleanPreferencesKey("dark_mode")
+    private val keyDark = booleanPreferencesKey("dark_mode")
 
     // Lectura reactiva del modo oscuro.
     //  - DataStore.data devuelve un Flow<Preferences> que emite cada vez que cambian los datos.
@@ -32,12 +34,12 @@ class UserPrefs(private val context: Context) {
     val darkMode: Flow<Boolean> =
         context.dataStore.data
             .catch { e -> if (e is IOException) emit(emptyPreferences()) else throw e }
-            .map { it[KEY_DARK] ?: false }
+            .map { it[keyDark] ?: false }
 
     // Escritura de la preferencia (transacción).
     //  - 'edit' abre y cierra una transacción atómica sobre el DataStore.
     //  - suspend: se ejecuta fuera del hilo principal.
     suspend fun setDarkMode(enabled: Boolean) {
-        context.dataStore.edit { it[KEY_DARK] = enabled }
+        context.dataStore.edit { it[keyDark] = enabled }
     }
 }

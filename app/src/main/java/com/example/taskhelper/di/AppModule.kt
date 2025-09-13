@@ -2,7 +2,7 @@
 package com.example.taskhelper.di
 
 import android.content.Context
-import com.example.taskhelper.data.local.AppDatabase
+import com.example.taskhelper.BuildConfig
 import com.example.taskhelper.data.prefs.UserPrefs
 import com.example.taskhelper.data.remote.ApiService
 import com.squareup.moshi.Moshi
@@ -15,8 +15,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import androidx.room.Room
-import com.example.taskhelper.BuildConfig
 import javax.inject.Singleton
 
 /**
@@ -34,7 +32,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
     /**
      * Crea el cliente HTTP que usará Retrofit.
      * - Marcado como @Singleton: una única instancia en toda la app (ahorra sockets y pools).
@@ -49,7 +46,8 @@ object AppModule {
      */
     @Provides @Singleton
     fun provideOkHttp(): OkHttpClient =
-        OkHttpClient.Builder()
+        OkHttpClient
+            .Builder()
             .apply {
                 // logging en debug
                 // Usa BuildConfig.ENABLE_HTTP_LOGS si quieres condicionar esto
@@ -77,8 +75,12 @@ object AppModule {
      * - Se inyecta en provideApi() para crear la interfaz de tu API.
      */
     @Provides @Singleton
-    fun provideRetrofit(okHttp: OkHttpClient, moshi: Moshi): Retrofit =
-        Retrofit.Builder()
+    fun provideRetrofit(
+        okHttp: OkHttpClient,
+        moshi: Moshi,
+    ): Retrofit =
+        Retrofit
+            .Builder()
             .baseUrl(BuildConfig.API_BASE_URL)
             .client(okHttp)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
@@ -93,29 +95,7 @@ object AppModule {
      *   que golpee endpoints). El repo lo usará para hacer llamadas: api.ping(), api.getTasks(), etc.
      */
     @Provides @Singleton
-    fun provideApi(retrofit: Retrofit): ApiService =
-        retrofit.create(ApiService::class.java)
-
-    /**
-     * Crea la base de datos Room.
-     * - @ApplicationContext: Hilt inyecta el contexto de aplicación (seguro para DB).
-     * - @Singleton: una sola instancia de DB por proceso (patrón recomendado).
-     *
-     * DÓNDE SE USA:
-     * - Se inyecta donde necesites la DB o directamente los DAO (ver provideTaskDao()).
-     */
-    @Provides @Singleton
-    fun provideDb(@ApplicationContext ctx: Context): AppDatabase =
-        Room.databaseBuilder(ctx, AppDatabase::class.java, "taskhelper.db").build()
-
-    /**
-     * Expone el DAO de tareas desde la DB para inyectarlo directamente en repositorios.
-     *
-     * DÓNDE SE USA:
-     * - Inyectado en TaskRepositoryImpl (u otros repos locales) para leer/grabar con Room.
-     */
-    @Provides
-    fun provideTaskDao(db: AppDatabase) = db.taskDao()
+    fun provideApi(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
 
     /**
      * Crea el wrapper de DataStore para preferencias de usuario.
@@ -126,5 +106,7 @@ object AppModule {
      * - Cualquier clase que necesite leer/escribir preferencias reactivas.
      */
     @Provides @Singleton
-    fun provideUserPrefs(@ApplicationContext ctx: Context) = UserPrefs(ctx)
+    fun provideUserPrefs(
+        @ApplicationContext ctx: Context,
+    ) = UserPrefs(ctx)
 }

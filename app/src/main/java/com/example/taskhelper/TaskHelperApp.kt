@@ -1,4 +1,3 @@
-// TaskHelperApp.kt
 package com.example.taskhelper
 
 import android.app.Application

@@ -1,5 +1,5 @@
-// data/local/TaskEntity.kt
-package com.example.taskhelper.data.local
+// data/task/local/TaskEntity.kt
+package com.example.taskhelper.data.task.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -22,12 +22,8 @@ import androidx.room.PrimaryKey
  */
 @Entity(tableName = "tasks")
 data class TaskEntity(
-    // Clave primaria de la tabla. autoGenerate = true hace que Room asigne el id en cada INSERT.
-    // Usamos Long para cubrir muchos registros y por compat con autoincrement.
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    // Columna "title": título de la tarea. No tiene valor por defecto → campo obligatorio al crear una entidad.
-    val title: String,
-    // Columna "done": indica si la tarea está completada. Por defecto false.
-    // Útil para togglear desde UI sin tener que pasar siempre el valor en cada creación.
-    val done: Boolean = false
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,   // PK autogenerada por Room
+    val title: String,                                   // Título persistido
+    val completed: Boolean = false,                      // Propiedad alineada con el dominio
+    val createdAtEpochSeconds: Long? = null              // Instant? -> converter
 )

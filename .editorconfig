@@ -21,3 +21,6 @@ ij_kotlin_packages_to_use_import_on_demand = androidx.compose.*
 # Comas finales (mejores diffs)
 ij_kotlin_allow_trailing_comma = true
 ij_kotlin_allow_trailing_comma_on_call_site = true
+
+# 👉 Permite PascalCase en funciones anotadas (Compose/Preview)
+ktlint_function_naming_ignore_when_annotated_with = Composable,Preview

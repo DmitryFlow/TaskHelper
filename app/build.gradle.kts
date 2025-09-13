@@ -3,8 +3,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)     // Hilt
-    alias(libs.plugins.hilt)    // Hilt
+    alias(libs.plugins.ksp) // Hilt
+    alias(libs.plugins.hilt) // Hilt
     jacoco
 }
 
@@ -27,7 +27,7 @@ android {
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
         debug {
@@ -76,26 +76,37 @@ tasks.register<JacocoReport>("jacocoTestReport") {
         csv.required.set(false)
     }
 
-    val fileFilter = listOf(
-        // Android/BuildConfig/Manifiestos
-        "**/R.class", "**/R$*.class", "**/BuildConfig.*", "**/Manifest*.*",
-        // Hilt/DI generados
-        "**/*_Factory*.*", "**/*_Hilt*.*", "**/hilt_*/**", "**/*_MembersInjector*.*",
-        // Room/KSP generados
-        "**/*_Impl*.*", "**/database/**", "**/databinding/**",
-        // AndroidX framework (no lo controlamos)
-        "**/androidx/**"
-    )
+    val fileFilter =
+        listOf(
+            // Android/BuildConfig/Manifiestos
+            "**/R.class",
+            "**/R$*.class",
+            "**/BuildConfig.*",
+            "**/Manifest*.*",
+            // Hilt/DI generados
+            "**/*_Factory*.*",
+            "**/*_Hilt*.*",
+            "**/hilt_*/**",
+            "**/*_MembersInjector*.*",
+            // Room/KSP generados
+            "**/*_Impl*.*",
+            "**/database/**",
+            "**/databinding/**",
+            // AndroidX framework (no lo controlamos)
+            "**/androidx/**",
+        )
 
     val buildDirFile = layout.buildDirectory.get().asFile
 
-    val javaClasses = fileTree("$buildDirFile/intermediates/javac/debug/classes") {
-        exclude(fileFilter)
-    }
+    val javaClasses =
+        fileTree("$buildDirFile/intermediates/javac/debug/classes") {
+            exclude(fileFilter)
+        }
 
-    val kotlinClasses = fileTree("$buildDirFile/tmp/kotlin-classes/debug") {
-        exclude(fileFilter)
-    }
+    val kotlinClasses =
+        fileTree("$buildDirFile/tmp/kotlin-classes/debug") {
+            exclude(fileFilter)
+        }
     classDirectories.setFrom(files(javaClasses, kotlinClasses))
 
     val srcDirs = files("src/main/java", "src/main/kotlin")
@@ -105,9 +116,9 @@ tasks.register<JacocoReport>("jacocoTestReport") {
         fileTree(buildDirFile) {
             include(
                 "outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec",
-                "jacoco/testDebugUnitTest.exec"
+                "jacoco/testDebugUnitTest.exec",
             )
-        }
+        },
     )
 }
 
@@ -156,6 +167,8 @@ dependencies {
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
     ksp(libs.moshi.ksp)
+    implementation("com.squareup.moshi:moshi-kotlin:1.15.1")
+    implementation("com.squareup.retrofit2:converter-moshi:2.11.0")
 
     // Room
     implementation(libs.room.runtime)

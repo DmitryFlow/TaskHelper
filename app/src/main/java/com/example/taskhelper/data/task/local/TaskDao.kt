@@ -1,7 +1,12 @@
 // data/local/TaskDao.kt
-package com.example.taskhelper.data.local
+package com.example.taskhelper.data.task.local
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.example.taskhelper.data.task.local.TaskEntity
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -53,8 +58,8 @@ interface TaskDao {
      * Uso típico:
      * - Repo: `dao.setDone(id, true/false)` desde un caso de uso (ToggleTask).
      */
-    @Query("UPDATE tasks SET done = :done WHERE id = :id")
-    suspend fun setDone(id: Long, done: Boolean)
+    @Query("UPDATE tasks SET completed = :completed WHERE id = :id")
+    suspend fun setCompleted(id: Long, completed: Boolean)
 
     /**
      * Elimina una fila concreta.
@@ -66,4 +71,7 @@ interface TaskDao {
      */
     @Delete
     suspend fun delete(entity: TaskEntity)
+
+    @Query("DELETE FROM tasks WHERE id = :id")
+    suspend fun deleteById(id: Long)
 }
