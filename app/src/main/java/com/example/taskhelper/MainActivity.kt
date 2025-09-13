@@ -16,7 +16,7 @@ class MainActivity : ComponentActivity() { // Activity raíz de la app (single-a
         // setContent { ... } es el punto de entrada de Jetpack Compose dentro de la Activity.
         // Aquí definimos el árbol de UI declarativo que se va a renderizar.
         setContent {
-            // TaskHelperTheme aplica colores, tipografías y shapes de Material 3 a todo el contenido.
+            // TaskHelperTheme aplica colores, tipografías y shapes de Material 3 a tod0 el contenido.
             TaskHelperTheme {
                 // Creamos y "recordamos" el NavController en el nivel superior (hoisting).
                 // Ventajas: una única fuente de verdad para navegación, mejor testabilidad y reusabilidad.

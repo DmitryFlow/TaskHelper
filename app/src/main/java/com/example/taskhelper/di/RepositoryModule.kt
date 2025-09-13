@@ -24,7 +24,7 @@ abstract class RepositoryModule { // 'abstract' porque usaremos @Binds (requiere
      * @Binds: indica a Hilt que, cuando se requiera el tipo de retorno (TaskRepository),
      *         debe proporcionar la instancia pasada como parámetro (TaskRepositoryImpl).
      *
-     * @Singleton: una única instancia compartida durante todo el ciclo de vida de la app.
+     * @Singleton: una única instancia compartida durante tod0 el ciclo de vida de la app.
      *             Útil porque el repo suele encapsular recursos (Room/OkHttp) que no conviene duplicar.
      *
      * Requisitos:
